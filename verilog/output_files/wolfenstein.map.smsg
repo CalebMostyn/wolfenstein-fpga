@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at game_display.v(31): always construct contains both blocking and non-blocking assignments File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v Line: 31

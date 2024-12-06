@@ -1,0 +1,568 @@
+Analysis & Synthesis report for wolfenstein
+Fri Dec  6 14:00:59 2024
+Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. General Register Statistics
+  9. Inverted Register Statistics
+ 10. Parameter Settings for User Entity Instance: game_display:display_inst|vga_driver:vga_inst
+ 11. Post-Synthesis Netlist Statistics for Top Partition
+ 12. Elapsed Time Per Partition
+ 13. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++---------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Fri Dec  6 14:00:59 2024          ;
+; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
+; Revision Name                   ; wolfenstein                                    ;
+; Top-level Entity Name           ; wolfenstein                                    ;
+; Family                          ; Cyclone V                                      ;
+; Logic utilization (in ALMs)     ; N/A                                            ;
+; Total registers                 ; 65                                             ;
+; Total pins                      ; 82                                             ;
+; Total virtual pins              ; 0                                              ;
+; Total block memory bits         ; 0                                              ;
+; Total DSP Blocks                ; 0                                              ;
+; Total HSSI RX PCSs              ; 0                                              ;
+; Total HSSI PMA RX Deserializers ; 0                                              ;
+; Total HSSI TX PCSs              ; 0                                              ;
+; Total HSSI PMA TX Serializers   ; 0                                              ;
+; Total PLLs                      ; 0                                              ;
+; Total DLLs                      ; 0                                              ;
++---------------------------------+------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                             ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
+; Top-level entity name                                                           ; wolfenstein        ; wolfenstein        ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 28          ;
+; Maximum allowed            ; 16          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 16          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-16        ;   0.0%      ;
++----------------------------+-------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                              ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                ; Library ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
+; vga_driver.v                     ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v   ;         ;
+; wolfenstein.v                    ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v  ;         ;
+; game_display.v                   ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v ;         ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
+
+
++------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary          ;
++---------------------------------------------+--------+
+; Resource                                    ; Usage  ;
++---------------------------------------------+--------+
+; Estimate of Logic utilization (ALMs needed) ; 62     ;
+;                                             ;        ;
+; Combinational ALUT usage for logic          ; 106    ;
+;     -- 7 input functions                    ; 0      ;
+;     -- 6 input functions                    ; 14     ;
+;     -- 5 input functions                    ; 13     ;
+;     -- 4 input functions                    ; 11     ;
+;     -- <=3 input functions                  ; 68     ;
+;                                             ;        ;
+; Dedicated logic registers                   ; 65     ;
+;                                             ;        ;
+; I/O pins                                    ; 82     ;
+;                                             ;        ;
+; Total DSP Blocks                            ; 0      ;
+;                                             ;        ;
+; Maximum fan-out node                        ; clk_25 ;
+; Maximum fan-out                             ; 66     ;
+; Total fan-out                               ; 680    ;
+; Average fan-out                             ; 2.03   ;
++---------------------------------------------+--------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                ;
++--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
+; Compilation Hierarchy Node     ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                        ; Entity Name  ; Library Name ;
++--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
+; |wolfenstein                   ; 106 (3)             ; 65 (1)                    ; 0                 ; 0          ; 82   ; 0            ; |wolfenstein                                               ; wolfenstein  ; work         ;
+;    |game_display:display_inst| ; 103 (77)            ; 64 (44)                   ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|game_display:display_inst                     ; game_display ; work         ;
+;       |vga_driver:vga_inst|    ; 26 (26)             ; 20 (20)                   ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|game_display:display_inst|vga_driver:vga_inst ; vga_driver   ; work         ;
++--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 65    ;
+; Number of registers using Synchronous Clear  ; 20    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 65    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 30    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; game_display:display_inst|x[8]         ; 3       ;
+; game_display:display_inst|x[6]         ; 4       ;
+; game_display:display_inst|y[5]         ; 4       ;
+; game_display:display_inst|y[4]         ; 4       ;
+; game_display:display_inst|y[7]         ; 4       ;
+; game_display:display_inst|y[6]         ; 4       ;
+; Total number of inverted registers = 6 ;         ;
++----------------------------------------+---------+
+
+
++--------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: game_display:display_inst|vga_driver:vga_inst ;
++----------------+-------+-------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                              ;
++----------------+-------+-------------------------------------------------------------------+
+; h_active       ; 640   ; Signed Integer                                                    ;
+; h_front_porch  ; 16    ; Signed Integer                                                    ;
+; h_sync_pulse   ; 96    ; Signed Integer                                                    ;
+; h_back_porch   ; 48    ; Signed Integer                                                    ;
+; h_total_pixels ; 800   ; Signed Integer                                                    ;
+; v_active       ; 480   ; Signed Integer                                                    ;
+; v_front_porch  ; 10    ; Signed Integer                                                    ;
+; v_sync_pulse   ; 2     ; Signed Integer                                                    ;
+; v_back_porch   ; 33    ; Signed Integer                                                    ;
+; v_total_lines  ; 525   ; Signed Integer                                                    ;
++----------------+-------+-------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 65                          ;
+;     CLR               ; 25                          ;
+;     CLR SCLR          ; 10                          ;
+;     ENA CLR           ; 20                          ;
+;     ENA CLR SCLR      ; 10                          ;
+; arriav_lcell_comb     ; 107                         ;
+;     arith             ; 57                          ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 43                          ;
+;         2 data inputs ; 12                          ;
+;     normal            ; 50                          ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 8                           ;
+;         2 data inputs ; 3                           ;
+;         4 data inputs ; 11                          ;
+;         5 data inputs ; 13                          ;
+;         6 data inputs ; 14                          ;
+; boundary_port         ; 82                          ;
+;                       ;                             ;
+; Max LUT depth         ; 5.00                        ;
+; Average LUT depth     ; 2.78                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
+    Info: Processing started: Fri Dec  6 14:00:54 2024
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off wolfenstein -c wolfenstein
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 16 of the 20 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file vga_driver.v
+    Info (12023): Found entity 1: vga_driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file wolfenstein.v
+    Info (12023): Found entity 1: wolfenstein File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file game_display.v
+    Info (12023): Found entity 1: game_display File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v Line: 1
+Info (12127): Elaborating entity "wolfenstein" for the top level hierarchy
+Warning (10034): Output port "HEX0" at wolfenstein.v(41) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+Warning (10034): Output port "HEX1" at wolfenstein.v(42) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+Warning (10034): Output port "HEX2" at wolfenstein.v(43) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+Warning (10034): Output port "HEX3" at wolfenstein.v(44) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+Warning (10034): Output port "LEDR" at wolfenstein.v(56) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+Info (12128): Elaborating entity "game_display" for hierarchy "game_display:display_inst" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 130
+Info (12128): Elaborating entity "vga_driver" for hierarchy "game_display:display_inst|vga_driver:vga_inst" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v Line: 21
+Warning (10230): Verilog HDL assignment warning at vga_driver.v(31): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 31
+Warning (10230): Verilog HDL assignment warning at vga_driver.v(35): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 35
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "HEX0[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX1[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
+    Warning (13410): Pin "LEDR[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 81
+Info (286030): Timing-Driven Synthesis is running
+Warning (20013): Ignored 168 assignments for entity "SAMPLE_PROJECT" -- entity does not exist in design
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CONVST -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_DIN -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_DOUT -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_SCLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCDAT -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_ADCLRCK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_BCLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACDAT -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_DACLRCK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AUD_XCK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK2_50 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK3_50 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK4_50 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[10] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[11] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[12] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[8] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_ADDR[9] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_BA[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_BA[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_CAS_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_CKE -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_CLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_CS_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[10] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[11] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[12] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[13] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[14] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[15] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[8] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_DQ[9] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_LDQM -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_RAS_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_UDQM -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to DRAM_WE_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_I2C_SCLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_I2C_SDAT -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX1[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX2[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX3[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX4[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IRDA_RXD -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IRDA_TXD -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_CLK2 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PS2_DAT2 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[8] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[9] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_CLK27 -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_DATA[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_HS -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_RESET_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to TD_VS -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_BLANK_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_B[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_CLK -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_G[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_HS -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[0] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[1] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[2] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[3] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[4] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[5] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[6] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[7] -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_SYNC_N -entity SAMPLE_PROJECT was ignored
+    Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS -entity SAMPLE_PROJECT was ignored
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 10 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
+Info (21057): Implemented 212 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 15 input pins
+    Info (21059): Implemented 67 output pins
+    Info (21061): Implemented 130 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 228 warnings
+    Info: Peak virtual memory: 4861 megabytes
+    Info: Processing ended: Fri Dec  6 14:00:59 2024
+    Info: Elapsed time: 00:00:05
+    Info: Total CPU time (on all processors): 00:00:04
+
+
