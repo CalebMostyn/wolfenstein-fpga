@@ -114,6 +114,7 @@ always @(posedge clk or negedge rst) begin
     end
 end
 
+// pixel color
 wire [23:0] rgb;
 assign {VGA_R, VGA_G, VGA_B} = rgb;
 
