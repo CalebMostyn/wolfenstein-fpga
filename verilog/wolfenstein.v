@@ -117,6 +117,7 @@ end
 wire [23:0] rgb;
 assign {VGA_R, VGA_G, VGA_B} = rgb;
 
+// this module is responsible for drawing to the screen
 game_display display_inst (
     .clk(clk_25),
     .rst(rst),
