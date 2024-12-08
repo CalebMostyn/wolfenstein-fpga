@@ -1,5 +1,5 @@
 Analysis & Synthesis report for wolfenstein
-Fri Dec  6 14:00:59 2024
+Sun Dec  8 17:20:36 2024
 Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 
 
@@ -13,12 +13,22 @@ Quartus Prime Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. General Register Statistics
-  9. Inverted Register Statistics
- 10. Parameter Settings for User Entity Instance: game_display:display_inst|vga_driver:vga_inst
- 11. Post-Synthesis Netlist Statistics for Top Partition
- 12. Elapsed Time Per Partition
- 13. Analysis & Synthesis Messages
+  8. Analysis & Synthesis DSP Block Usage Summary
+  9. State Machine - |wolfenstein|S
+ 10. Registers Removed During Synthesis
+ 11. Removed Registers Triggering Further Register Optimizations
+ 12. General Register Statistics
+ 13. Inverted Register Statistics
+ 14. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 15. Parameter Settings for User Entity Instance: Top-level Entity: |wolfenstein
+ 16. Parameter Settings for User Entity Instance: vga_driver:vga_inst
+ 17. Port Connectivity Checks: "line:line_1"
+ 18. Port Connectivity Checks: "square:player_square"
+ 19. Port Connectivity Checks: "vga_driver:vga_inst"
+ 20. Post-Synthesis Netlist Statistics for Top Partition
+ 21. Elapsed Time Per Partition
+ 22. Analysis & Synthesis Messages
+ 23. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -45,17 +55,17 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +---------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Fri Dec  6 14:00:59 2024          ;
+; Analysis & Synthesis Status     ; Successful - Sun Dec  8 17:20:36 2024          ;
 ; Quartus Prime Version           ; 23.1std.1 Build 993 05/14/2024 SC Lite Edition ;
 ; Revision Name                   ; wolfenstein                                    ;
 ; Top-level Entity Name           ; wolfenstein                                    ;
 ; Family                          ; Cyclone V                                      ;
 ; Logic utilization (in ALMs)     ; N/A                                            ;
-; Total registers                 ; 65                                             ;
+; Total registers                 ; 99                                             ;
 ; Total pins                      ; 82                                             ;
 ; Total virtual pins              ; 0                                              ;
 ; Total block memory bits         ; 0                                              ;
-; Total DSP Blocks                ; 0                                              ;
+; Total DSP Blocks                ; 2                                              ;
 ; Total HSSI RX PCSs              ; 0                                              ;
 ; Total HSSI PMA RX Deserializers ; 0                                              ;
 ; Total HSSI TX PCSs              ; 0                                              ;
@@ -169,54 +179,107 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                              ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                ; Library ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
-; vga_driver.v                     ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v   ;         ;
-; wolfenstein.v                    ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v  ;         ;
-; game_display.v                   ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v ;         ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------------------+---------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                               ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                                 ; Library ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------+---------+
+; vga_driver.v                     ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/vga_driver.v  ;         ;
+; wolfenstein.v                    ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v ;         ;
+; square.v                         ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/square.v      ;         ;
+; line.v                           ; yes             ; User Verilog HDL File  ; C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/line.v        ;         ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------+---------+
 
 
-+------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary          ;
-+---------------------------------------------+--------+
-; Resource                                    ; Usage  ;
-+---------------------------------------------+--------+
-; Estimate of Logic utilization (ALMs needed) ; 62     ;
-;                                             ;        ;
-; Combinational ALUT usage for logic          ; 106    ;
-;     -- 7 input functions                    ; 0      ;
-;     -- 6 input functions                    ; 14     ;
-;     -- 5 input functions                    ; 13     ;
-;     -- 4 input functions                    ; 11     ;
-;     -- <=3 input functions                  ; 68     ;
-;                                             ;        ;
-; Dedicated logic registers                   ; 65     ;
-;                                             ;        ;
-; I/O pins                                    ; 82     ;
-;                                             ;        ;
-; Total DSP Blocks                            ; 0      ;
-;                                             ;        ;
-; Maximum fan-out node                        ; clk_25 ;
-; Maximum fan-out                             ; 66     ;
-; Total fan-out                               ; 680    ;
-; Average fan-out                             ; 2.03   ;
-+---------------------------------------------+--------+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 176            ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 296            ;
+;     -- 7 input functions                    ; 0              ;
+;     -- 6 input functions                    ; 53             ;
+;     -- 5 input functions                    ; 16             ;
+;     -- 4 input functions                    ; 40             ;
+;     -- <=3 input functions                  ; 187            ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 99             ;
+;                                             ;                ;
+; I/O pins                                    ; 82             ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 2              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 99             ;
+; Total fan-out                               ; 1484           ;
+; Average fan-out                             ; 2.65           ;
++---------------------------------------------+----------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                ;
-+--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
-; Compilation Hierarchy Node     ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                        ; Entity Name  ; Library Name ;
-+--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
-; |wolfenstein                   ; 106 (3)             ; 65 (1)                    ; 0                 ; 0          ; 82   ; 0            ; |wolfenstein                                               ; wolfenstein  ; work         ;
-;    |game_display:display_inst| ; 103 (77)            ; 64 (44)                   ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|game_display:display_inst                     ; game_display ; work         ;
-;       |vga_driver:vga_inst|    ; 26 (26)             ; 20 (20)                   ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|game_display:display_inst|vga_driver:vga_inst ; vga_driver   ; work         ;
-+--------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------+--------------+--------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                  ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------+-------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name               ; Entity Name ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------+-------------+--------------+
+; |wolfenstein               ; 296 (128)           ; 99 (78)                   ; 0                 ; 2          ; 82   ; 0            ; |wolfenstein                      ; wolfenstein ; work         ;
+;    |line:line_1|           ; 86 (86)             ; 0 (0)                     ; 0                 ; 2          ; 0    ; 0            ; |wolfenstein|line:line_1          ; line        ; work         ;
+;    |square:player_square|  ; 48 (48)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|square:player_square ; square      ; work         ;
+;    |vga_driver:vga_inst|   ; 34 (34)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |wolfenstein|vga_driver:vga_inst  ; vga_driver  ; work         ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-----------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary  ;
++---------------------------------+-------------+
+; Statistic                       ; Number Used ;
++---------------------------------+-------------+
+; Independent 27x27               ; 2           ;
+; Total number of DSP blocks      ; 2           ;
+;                                 ;             ;
+; Fixed Point Unsigned Multiplier ; 2           ;
++---------------------------------+-------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------+
+; State Machine - |wolfenstein|S                   ;
++----------+--------+----------+---------+---------+
+; Name     ; S.WAIT ; S.UPDATE ; S.START ; S.ERROR ;
++----------+--------+----------+---------+---------+
+; S.START  ; 0      ; 0        ; 0       ; 0       ;
+; S.UPDATE ; 0      ; 1        ; 1       ; 0       ;
+; S.WAIT   ; 1      ; 0        ; 1       ; 0       ;
+; S.ERROR  ; 0      ; 0        ; 1       ; 1       ;
++----------+--------+----------+---------+---------+
+
+
++------------------------------------------------------------+
+; Registers Removed During Synthesis                         ;
++---------------------------------------+--------------------+
+; Register name                         ; Reason for Removal ;
++---------------------------------------+--------------------+
+; S~4                                   ; Lost fanout        ;
+; S~5                                   ; Lost fanout        ;
+; S~7                                   ; Lost fanout        ;
+; S~8                                   ; Lost fanout        ;
+; S~9                                   ; Lost fanout        ;
+; S~10                                  ; Lost fanout        ;
+; S~11                                  ; Lost fanout        ;
+; S.ERROR                               ; Lost fanout        ;
+; Total Number of Removed Registers = 8 ;                    ;
++---------------------------------------+--------------------+
+
+
++-----------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                 ;
++---------------+--------------------+----------------------------------------+
+; Register name ; Reason for Removal ; Registers Removed due to This Register ;
++---------------+--------------------+----------------------------------------+
+; S~4           ; Lost Fanouts       ; S.ERROR                                ;
++---------------+--------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -224,48 +287,118 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 65    ;
+; Total registers                              ; 99    ;
 ; Number of registers using Synchronous Clear  ; 20    ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 65    ;
+; Number of registers using Synchronous Load   ; 31    ;
+; Number of registers using Asynchronous Clear ; 99    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 30    ;
+; Number of registers using Clock Enable       ; 40    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+--------------------------------------------------+
-; Inverted Register Statistics                     ;
-+----------------------------------------+---------+
-; Inverted Register                      ; Fan out ;
-+----------------------------------------+---------+
-; game_display:display_inst|x[8]         ; 3       ;
-; game_display:display_inst|x[6]         ; 4       ;
-; game_display:display_inst|y[5]         ; 4       ;
-; game_display:display_inst|y[4]         ; 4       ;
-; game_display:display_inst|y[7]         ; 4       ;
-; game_display:display_inst|y[6]         ; 4       ;
-; Total number of inverted registers = 6 ;         ;
-+----------------------------------------+---------+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; y[2]                                    ; 6       ;
+; y[1]                                    ; 5       ;
+; y[5]                                    ; 6       ;
+; y[7]                                    ; 6       ;
+; y[6]                                    ; 6       ;
+; x[2]                                    ; 6       ;
+; x[1]                                    ; 5       ;
+; x[8]                                    ; 4       ;
+; x[5]                                    ; 5       ;
+; x[4]                                    ; 5       ;
+; Total number of inverted registers = 10 ;         ;
++-----------------------------------------+---------+
 
 
-+--------------------------------------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: game_display:display_inst|vga_driver:vga_inst ;
-+----------------+-------+-------------------------------------------------------------------+
-; Parameter Name ; Value ; Type                                                              ;
-+----------------+-------+-------------------------------------------------------------------+
-; h_active       ; 640   ; Signed Integer                                                    ;
-; h_front_porch  ; 16    ; Signed Integer                                                    ;
-; h_sync_pulse   ; 96    ; Signed Integer                                                    ;
-; h_back_porch   ; 48    ; Signed Integer                                                    ;
-; h_total_pixels ; 800   ; Signed Integer                                                    ;
-; v_active       ; 480   ; Signed Integer                                                    ;
-; v_front_porch  ; 10    ; Signed Integer                                                    ;
-; v_sync_pulse   ; 2     ; Signed Integer                                                    ;
-; v_back_porch   ; 33    ; Signed Integer                                                    ;
-; v_total_lines  ; 525   ; Signed Integer                                                    ;
-+----------------+-------+-------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |wolfenstein|rgb           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
+
+
++-----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |wolfenstein ;
++----------------+----------+-------------------------------------------------+
+; Parameter Name ; Value    ; Type                                            ;
++----------------+----------+-------------------------------------------------+
+; START          ; 00000000 ; Unsigned Binary                                 ;
+; UPDATE         ; 00000001 ; Unsigned Binary                                 ;
+; WAIT           ; 00000010 ; Unsigned Binary                                 ;
+; DONE           ; 00000011 ; Unsigned Binary                                 ;
+; ERROR          ; 11111111 ; Unsigned Binary                                 ;
++----------------+----------+-------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: vga_driver:vga_inst    ;
++----------------+----------------------------------+-----------------+
+; Parameter Name ; Value                            ; Type            ;
++----------------+----------------------------------+-----------------+
+; HA_END         ; 1001111111                       ; Unsigned Binary ;
+; HS_STA         ; 00000000000000000000001010001111 ; Unsigned Binary ;
+; HS_END         ; 00000000000000000000001011101111 ; Unsigned Binary ;
+; WIDTH          ; 1100011111                       ; Unsigned Binary ;
+; VA_END         ; 0111011111                       ; Unsigned Binary ;
+; VS_STA         ; 00000000000000000000000111101001 ; Unsigned Binary ;
+; VS_END         ; 00000000000000000000000111101011 ; Unsigned Binary ;
+; HEIGHT         ; 1000001100                       ; Unsigned Binary ;
++----------------+----------------------------------+-----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------+
+; Port Connectivity Checks: "line:line_1"    ;
++----------+-------+----------+--------------+
+; Port     ; Type  ; Severity ; Details      ;
++----------+-------+----------+--------------+
+; x1[5..0] ; Input ; Info     ; Stuck at GND ;
+; x1[9]    ; Input ; Info     ; Stuck at GND ;
+; x1[8]    ; Input ; Info     ; Stuck at VCC ;
+; x1[7]    ; Input ; Info     ; Stuck at GND ;
+; x1[6]    ; Input ; Info     ; Stuck at VCC ;
+; y1[9..4] ; Input ; Info     ; Stuck at GND ;
+; y1[3]    ; Input ; Info     ; Stuck at VCC ;
+; y1[2]    ; Input ; Info     ; Stuck at GND ;
+; y1[1]    ; Input ; Info     ; Stuck at VCC ;
+; y1[0]    ; Input ; Info     ; Stuck at GND ;
++----------+-------+----------+--------------+
+
+
++--------------------------------------------------+
+; Port Connectivity Checks: "square:player_square" ;
++--------------+-------+----------+----------------+
+; Port         ; Type  ; Severity ; Details        ;
++--------------+-------+----------+----------------+
+; width[9..5]  ; Input ; Info     ; Stuck at GND   ;
+; width[1..0]  ; Input ; Info     ; Stuck at GND   ;
+; width[4]     ; Input ; Info     ; Stuck at VCC   ;
+; width[3]     ; Input ; Info     ; Stuck at GND   ;
+; width[2]     ; Input ; Info     ; Stuck at VCC   ;
+; height[9..5] ; Input ; Info     ; Stuck at GND   ;
+; height[1..0] ; Input ; Info     ; Stuck at GND   ;
+; height[4]    ; Input ; Info     ; Stuck at VCC   ;
+; height[3]    ; Input ; Info     ; Stuck at GND   ;
+; height[2]    ; Input ; Info     ; Stuck at VCC   ;
++--------------+-------+----------+----------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "vga_driver:vga_inst"                                                                                              ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; Port          ; Type   ; Severity ; Details                                                                                                  ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; active_pixels ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------+
@@ -273,27 +406,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 65                          ;
-;     CLR               ; 25                          ;
-;     CLR SCLR          ; 10                          ;
+; arriav_ff             ; 99                          ;
+;     CLR               ; 28                          ;
+;     CLR SLD           ; 31                          ;
 ;     ENA CLR           ; 20                          ;
-;     ENA CLR SCLR      ; 10                          ;
-; arriav_lcell_comb     ; 107                         ;
-;     arith             ; 57                          ;
-;         0 data inputs ; 2                           ;
-;         1 data inputs ; 43                          ;
-;         2 data inputs ; 12                          ;
-;     normal            ; 50                          ;
+;     ENA CLR SCLR      ; 20                          ;
+; arriav_lcell_comb     ; 299                         ;
+;     arith             ; 113                         ;
 ;         0 data inputs ; 1                           ;
+;         1 data inputs ; 92                          ;
+;         2 data inputs ; 20                          ;
+;     normal            ; 178                         ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 13                          ;
+;         2 data inputs ; 42                          ;
+;         3 data inputs ; 12                          ;
+;         4 data inputs ; 40                          ;
+;         5 data inputs ; 16                          ;
+;         6 data inputs ; 53                          ;
+;     shared            ; 8                           ;
 ;         1 data inputs ; 8                           ;
-;         2 data inputs ; 3                           ;
-;         4 data inputs ; 11                          ;
-;         5 data inputs ; 13                          ;
-;         6 data inputs ; 14                          ;
+; arriav_mac            ; 2                           ;
 ; boundary_port         ; 82                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 5.00                        ;
-; Average LUT depth     ; 2.78                        ;
+; Max LUT depth         ; 7.40                        ;
+; Average LUT depth     ; 3.54                        ;
 +-----------------------+-----------------------------+
 
 
@@ -312,67 +449,77 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 23.1std.1 Build 993 05/14/2024 SC Lite Edition
-    Info: Processing started: Fri Dec  6 14:00:54 2024
+    Info: Processing started: Sun Dec  8 17:20:31 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off wolfenstein -c wolfenstein
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 20 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file vga_driver.v
-    Info (12023): Found entity 1: vga_driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 1
+    Info (12023): Found entity 1: vga_driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/vga_driver.v Line: 6
 Info (12021): Found 1 design units, including 1 entities, in source file wolfenstein.v
-    Info (12023): Found entity 1: wolfenstein File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file game_display.v
-    Info (12023): Found entity 1: game_display File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v Line: 1
+    Info (12023): Found entity 1: wolfenstein File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file square.v
+    Info (12023): Found entity 1: square File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/square.v Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file line.v
+    Info (12023): Found entity 1: line File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/line.v Line: 2
 Info (12127): Elaborating entity "wolfenstein" for the top level hierarchy
-Warning (10034): Output port "HEX0" at wolfenstein.v(41) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-Warning (10034): Output port "HEX1" at wolfenstein.v(42) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-Warning (10034): Output port "HEX2" at wolfenstein.v(43) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-Warning (10034): Output port "HEX3" at wolfenstein.v(44) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-Warning (10034): Output port "LEDR" at wolfenstein.v(56) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-Info (12128): Elaborating entity "game_display" for hierarchy "game_display:display_inst" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 130
-Info (12128): Elaborating entity "vga_driver" for hierarchy "game_display:display_inst|vga_driver:vga_inst" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/game_display.v Line: 21
-Warning (10230): Verilog HDL assignment warning at vga_driver.v(31): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 31
-Warning (10230): Verilog HDL assignment warning at vga_driver.v(35): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/vga_driver.v Line: 35
+Info (10264): Verilog HDL Case Statement information at wolfenstein.v(151): all case item expressions in this case statement are onehot File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 151
+Warning (10230): Verilog HDL assignment warning at wolfenstein.v(183): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 183
+Warning (10230): Verilog HDL assignment warning at wolfenstein.v(186): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 186
+Warning (10230): Verilog HDL assignment warning at wolfenstein.v(190): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 190
+Warning (10230): Verilog HDL assignment warning at wolfenstein.v(192): truncated value with size 32 to match size of target (10) File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 192
+Warning (10230): Verilog HDL assignment warning at wolfenstein.v(194): truncated value with size 32 to match size of target (31) File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 194
+Info (10264): Verilog HDL Case Statement information at wolfenstein.v(178): all case item expressions in this case statement are onehot File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 178
+Warning (10034): Output port "HEX0" at wolfenstein.v(41) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+Warning (10034): Output port "HEX1" at wolfenstein.v(42) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+Warning (10034): Output port "HEX2" at wolfenstein.v(43) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+Warning (10034): Output port "HEX3" at wolfenstein.v(44) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+Warning (10034): Output port "LEDR" at wolfenstein.v(56) has no driver File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+Info (12128): Elaborating entity "vga_driver" for hierarchy "vga_driver:vga_inst" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 130
+Info (12128): Elaborating entity "square" for hierarchy "square:player_square" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 211
+Info (12128): Elaborating entity "line" for hierarchy "line:line_1" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 222
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "HEX0[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX0[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 41
-    Warning (13410): Pin "HEX1[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 42
-    Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 43
-    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 44
-    Warning (13410): Pin "LEDR[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 56
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 81
+    Warning (13410): Pin "HEX0[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX0[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 41
+    Warning (13410): Pin "HEX1[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 42
+    Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 43
+    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 44
+    Warning (13410): Pin "LEDR[0]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 56
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 81
 Info (286030): Timing-Driven Synthesis is running
+Info (17049): 8 registers lost all their fanouts during netlist optimizations.
 Warning (20013): Ignored 168 assignments for entity "SAMPLE_PROJECT" -- entity does not exist in design
     Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CONVST -entity SAMPLE_PROJECT was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_DIN -entity SAMPLE_PROJECT was ignored
@@ -542,27 +689,34 @@ Warning (20013): Ignored 168 assignments for entity "SAMPLE_PROJECT" -- entity d
     Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[7] -entity SAMPLE_PROJECT was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_SYNC_N -entity SAMPLE_PROJECT was ignored
     Warning (20014): Assignment for entity set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS -entity SAMPLE_PROJECT was ignored
+Info (144001): Generated suppressed messages file C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/output_files/wolfenstein.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 10 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/mostyncr/Desktop/ECE_287/FINAL_PROJ/wolfenstein.v Line: 65
-Info (21057): Implemented 212 device resources after synthesis - the final resource count might be different
+Warning (21074): Design contains 9 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/wolfenstein.v Line: 65
+Info (21057): Implemented 405 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 15 input pins
     Info (21059): Implemented 67 output pins
-    Info (21061): Implemented 130 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 228 warnings
-    Info: Peak virtual memory: 4861 megabytes
-    Info: Processing ended: Fri Dec  6 14:00:59 2024
+    Info (21061): Implemented 321 logic cells
+    Info (21062): Implemented 2 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 231 warnings
+    Info: Peak virtual memory: 4869 megabytes
+    Info: Processing ended: Sun Dec  8 17:20:36 2024
     Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:04
+    Info: Total CPU time (on all processors): 00:00:03
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in C:/Users/mostyncr/Desktop/ECE_287/ece287-final-project/verilog/output_files/wolfenstein.map.smsg.
 
 

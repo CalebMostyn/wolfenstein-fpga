@@ -88,8 +88,8 @@ module wolfenstein(
 	//inout 		    [35:0]		GPIO_1
 );
 
-wire [9:0] h_count;
-wire [9:0] v_count;
+wire [9:0] x_pixel;
+wire [9:0] y_pixel;
 wire display_area;
 
 wire clk;
@@ -98,37 +98,163 @@ assign clk = CLOCK_50;
 wire rst;
 assign rst = KEY[3];
 
-reg clk_25;
-assign VGA_CLK = clk_25;
-assign VGA_BLANK_N = display_area;
-assign VGA_SYNC_N = 1'b0;
+wire start;
+assign start = SW[0];
 
-assign display_area = (h_count < 640) && (v_count < 480);
+wire flip_vert = SW[9];
 
-// Clock divider for 25MHz
-always @(posedge clk or negedge rst) begin
-    if (rst == 1'b0) begin
-        clk_25 <= 0;
-    end else begin
-        clk_25 <= ~clk_25;
-    end
-end
+wire left;
+wire right;
+wire up;
+assign left = ~KEY[2];
+assign right = ~KEY[0];
+assign up = ~KEY[1];
+
+reg [30:0]counter;
 
 // pixel color
-wire [23:0] rgb;
+reg [23:0] rgb;
 assign {VGA_R, VGA_G, VGA_B} = rgb;
 
-// this module is responsible for drawing to the screen
-game_display display_inst (
-    .clk(clk_25),
+// Instantiate the VGA driver
+vga_driver vga_inst (
+    .clk(clk),
     .rst(rst),
-    .start(SW[9]),
-    .hsync(VGA_HS),
-    .vsync(VGA_VS),
-    .rgb(rgb),
-    .h_count(h_count),
-    .v_count(v_count),
-	 .keys(~KEY[2:0])
+	 .vga_clk(VGA_CLK),
+	 .hsync(VGA_HS),
+	 .vsync(VGA_VS),
+	 .xPixel(x_pixel),
+	 .yPixel(y_pixel),
+	 .VGA_BLANK_N(VGA_BLANK_N),
+	 .VGA_SYNC_N(VGA_SYNC_N)
 );
+
+reg [7:0]S;
+reg [7:0]NS;
+
+parameter START = 8'd0,
+			UPDATE = 8'd1,
+			WAIT = 8'd2,
+			DONE = 8'd3,
+			ERROR = 8'hFF;
+			
+always@(posedge clk or negedge rst)
+begin
+	if (rst == 1'b0)
+		S <= START;
+	else
+		S <= NS;
+end
+
+always@(*)
+begin
+	case(S)
+		START:
+			if (start == 1'b1)
+				NS = UPDATE;
+			else
+				NS = UPDATE;
+		UPDATE: NS = WAIT;
+		WAIT:
+			if (counter < 30'd5_000_000)
+				NS = WAIT;
+			else
+				NS = UPDATE;
+		default: NS = ERROR;
+	endcase
+end
+
+always@(posedge clk or negedge rst)
+begin
+	if (rst == 1'b0)
+	begin
+		// reset
+		x <= 10'd310;
+		y <= 10'd230;
+		counter <= 0;
+	end
+	else
+	begin
+		case(S)
+			UPDATE:
+			begin
+				counter <= 0;
+				if (left)
+					x <= x - 1;
+				
+				if (right)
+					x <= x + 1;
+					
+				if (up)
+					if (flip_vert)
+						y <= y + 1;
+					else
+						y <= y - 1;
+			end
+			WAIT: counter <= counter + 1;
+		endcase
+	end
+end
+
+reg [9:0]x;
+reg [9:0]y;
+
+wire player;
+square player_square(
+	.x_pos(x),
+	.y_pos(y),
+	.width(10'd20),
+	.height(10'd20),
+	.x_pixel(x_pixel),
+	.y_pixel(y_pixel),
+	.is_in_square(player)
+);
+
+wire test_line;
+line line_1(
+	.x2(x + 10'd10),
+	.y2(y + 10'd10),
+	.x1(10'd320),
+	.y1(10'd10),
+	.x_pixel(x_pixel),
+	.y_pixel(y_pixel),
+	.is_on_line(test_line)
+);
+
+// RGB logic to draw the screen and notes.
+always @(posedge clk or negedge rst) 
+begin
+	if (rst == 1'b0) 
+	begin
+		rgb <= 24'h000000;
+	end 
+	else
+	begin
+		if ((x_pixel < 10'd640) && (y_pixel < 10'd480)) 
+		begin
+			// ***** IN ACTIVE DRAW SPACE *****
+			// COLOR ASSIGNMENTS HAPPEN HERE
+			// DRAWN OBJECTS MUST BE IN ORDER OF WHEN THEY SHOULD BE DRAWN
+			// i.e. colors assigned last will be drawn to the screen on the top
+			
+			// white background
+			rgb <= 24'hFFFFFF;
+		
+			// player square
+			if (player)
+				rgb <= 24'hFF0000;
+			
+			if (test_line)
+				rgb <= 24'h0000FF;
+			
+			// ***** END ACTIVE DRAW SPACCE *****
+      end
+		else
+		begin
+          rgb <= 24'h000000; // Outside the active area, set to black
+      end
+	end
+end
+
 	
 endmodule

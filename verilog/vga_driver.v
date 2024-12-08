@@ -1,49 +1,85 @@
-module vga_driver (
-    input wire clk,       // 50 MHz system clock
-    input wire rst,       // Reset input
-    output reg hsync,     // Horizontal sync output
-    output reg vsync,     // Vertical sync output
-    output reg [9:0] h_count,
-    output reg [9:0] v_count
+/////////////////////////////////////////////////////////////////////////////////////
+// Adaption by Peter Jamieson for DE2-115 from:
+// 640x480 from https://projectf.io/posts/fpga-graphics/
+/////////////////////////////////////////////////////////////////////////////////////
+
+module vga_driver(
+
+input clk,
+input rst,
+
+output reg vga_clk,
+
+output reg hsync, // horizontal sync
+output reg vsync, // vertical sync
+
+output reg active_pixels, // is on when we're in the active draw space
+
+output reg [9:0]xPixel, // current x
+output reg [9:0]yPixel, // current y - 10 bits = 1024 ... a little bit more than we need
+
+output reg VGA_BLANK_N,	//	VGA BLANK = !BLANK Composite Blank Control Input (TTL Compatible). A Logic 0 on this control input drives the analog outputs, IOR, IOB, and IOG, to  the blanking level.  The  BLANK  signal is latched on the rising edge  of CLOCK.  While BLANK  is a Logic 0, the R0 to  R9, G0  to  G9, and B0 to  B9 pixel inputs are  ignored. 
+
+output reg VGA_SYNC_N		//	VGA SYNC = !SYNC Composite Sync Control Input (TTL Compatible). A Logic 0 on the  SYNC source.  This is internally connected to  the IOG analog output.  SYNC  input switches off a 40 IRE current  does  not override any other control  or data input; therefore, it should only be asserted during the blanking interval.  SYNC edge of CLOCK.  If  sync information is not required  on the green channel, the  SYNC Logic  0. 
 );
 
-// VGA parameters for 640 x 480 @ 60Hz
-// Timing from VESA standard
-    parameter h_active = 640;
-    parameter h_front_porch = 16;
-    parameter h_sync_pulse = 96;
-    parameter h_back_porch = 48;
-    parameter h_total_pixels = 800;
+//Timings from https://timetoexplore.net/blog/video-timings-vga-720p-1080p
+// 640 by 480
 
-    parameter v_active = 480;
-    parameter v_front_porch = 10;
-    parameter v_sync_pulse = 2;
-    parameter v_back_porch = 33;
-    parameter v_total_lines = 525;
+// horizontal timings
+parameter HA_END = 10'd639;           // end of active pixels
+parameter HS_STA = HA_END + 16;   // sync starts after front porch
+parameter HS_END = HS_STA + 96;   // sync ends
+parameter WIDTH   = 10'd799;           // last pixel on line (after back porch)
 
-// Updating horizontal and vertical counters
-    always @(posedge clk or negedge rst) begin
-        if (rst == 1'b0) begin
-            h_count <= 0;
-            v_count <= 0;
-        end else begin
-            if (h_count < h_total_pixels - 1) begin
-                h_count <= h_count + 1;
-            end else begin
-                h_count <= 0;
-                if (v_count < v_total_lines - 1) begin
-                    v_count <= v_count + 1;
-                end else begin
-                    v_count <= 0;
-                end
-            end
-        end
-    end
+// vertical timings
+parameter VA_END = 10'd479;           // end of active pixels
+parameter VS_STA = VA_END + 10;   // sync starts after front porch
+parameter VS_END = VS_STA + 2;    // sync ends
+parameter HEIGHT = 10'd524;           // last line on screen (after back porch)
 
-// Generating hsync and vsync signals
-    always @(*) begin
-        hsync = ~((h_count >= (h_active + h_front_porch)) && (h_count < (h_active + h_front_porch + h_sync_pulse)));
-        vsync = ~((v_count >= (v_active + v_front_porch)) && (v_count < (v_active + v_front_porch + v_sync_pulse)));
-    end
+always @(*)
+begin 
+	hsync = ~((xPixel >= HS_STA) && (xPixel < HS_END));
+	vsync = ~((yPixel >= VS_STA) && (yPixel < VS_END));
+	active_pixels = (xPixel <= HA_END && yPixel <= VA_END); 
+	
+	VGA_BLANK_N = active_pixels;
+	VGA_SYNC_N = 1'b1;
+end
+
+always @(posedge clk or negedge rst)
+begin
+	if (rst == 1'b0)
+	begin
+		vga_clk <= 1'b0;
+		xPixel <= 10'd0;
+		yPixel <= 10'd0;
+	end
+	else
+	begin
+		vga_clk = ~vga_clk; // clock divider
+		
+		if (vga_clk == 1'b1)
+			if(xPixel == WIDTH)
+			begin
+				xPixel <= 10'd0;
+				if(yPixel == HEIGHT)
+				begin
+					yPixel<=10'd0;
+				end
+				else
+				begin
+					yPixel <= yPixel+1'b1;
+				end
+			end
+			else
+			begin
+				xPixel <= xPixel+1'b1;
+			end
+			
+			
+		end
+end
 
 endmodule
