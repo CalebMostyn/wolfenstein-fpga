@@ -110,6 +110,14 @@ assign left = ~KEY[2];
 assign right = ~KEY[0];
 assign up = ~KEY[1];
 
+wire [1:0]view_selector;
+assign view_selector = SW[8:7];
+
+parameter TWO_DIM = 2'd0,
+			THREE_DIM = 2'd1,
+			BOTH_DIM = 2'd2;
+			
+
 reg [30:0]counter;
 
 // pixel color
@@ -210,15 +218,13 @@ square player_square(
 	.is_in_square(player)
 );
 
-wire test_line;
-line line_1(
-	.x2(x + 10'd10),
-	.y2(y + 10'd10),
-	.x1(10'd320),
-	.y1(10'd10),
+wire [63:0]grid_active;
+wire [0:63]grid_is_wall;
+grid main_grid(
 	.x_pixel(x_pixel),
 	.y_pixel(y_pixel),
-	.is_on_line(test_line)
+	.grid_active(grid_active),
+	.grid_is_wall(grid_is_wall)
 );
 
 // RGB logic to draw the screen and notes.
@@ -240,12 +246,26 @@ begin
 			// white background
 			rgb <= 24'hFFFFFF;
 		
+			if (view_selector == THREE_DIM || view_selector == BOTH_DIM)
+			begin
+				// draw 3d view
+			end
+			
+			if (view_selector == TWO_DIM || view_selector == BOTH_DIM)
+            begin
+                // draw grid (either full screen for two_dim or small for both_dim)
+                // Instead of generate, we just loop through the grid
+                integer i;
+                for (i = 0; i < 64; i = i + 1) 
+                begin
+                    if (grid_active[i] && grid_is_wall[i])
+                        rgb <= 24'h000000;  // Set color to black for walls
+                end
+            end
+		
 			// player square
 			if (player)
 				rgb <= 24'hFF0000;
-			
-			if (test_line)
-				rgb <= 24'h0000FF;
 			
 			// ***** END ACTIVE DRAW SPACCE *****
       end

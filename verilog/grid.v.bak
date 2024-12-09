@@ -1,0 +1,5 @@
+module grid(
+	input wire [9:0]x_pixel,
+	input wire [9:0]y_pixel,
+	output reg [64:0]grid
+);
