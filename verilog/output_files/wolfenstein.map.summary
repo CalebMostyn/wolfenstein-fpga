@@ -1,4 +1,4 @@
-Analysis & Synthesis Status : Successful - Sun Dec  8 21:36:59 2024
+Analysis & Synthesis Status : Successful - Mon Dec  9 19:44:15 2024
 Quartus Prime Version : 23.1std.1 Build 993 05/14/2024 SC Lite Edition
 Revision Name : wolfenstein
 Top-level Entity Name : wolfenstein
@@ -8,7 +8,7 @@ Total registers : 99
 Total pins : 82
 Total virtual pins : 0
 Total block memory bits : 0
-Total DSP Blocks : 0
+Total DSP Blocks : 28
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0

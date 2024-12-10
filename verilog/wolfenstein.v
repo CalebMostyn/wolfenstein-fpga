@@ -117,6 +117,13 @@ parameter TWO_DIM = 2'd0,
 			THREE_DIM = 2'd1,
 			BOTH_DIM = 2'd2;
 			
+parameter UPDATE_SPEED = 30'd100; // Times a second there is an update
+
+parameter MAP_COLORS = {24'h000000,
+								24'hFF0000,
+								24'h00FF00,
+								24'h0000FF};
+			
 
 reg [30:0]counter;
 
@@ -164,7 +171,7 @@ begin
 				NS = UPDATE;
 		UPDATE: NS = WAIT;
 		WAIT:
-			if (counter < 30'd5_000_000)
+			if (counter < 30'd50_000_000 / UPDATE_SPEED)
 				NS = WAIT;
 			else
 				NS = UPDATE;
@@ -218,13 +225,15 @@ square player_square(
 	.is_in_square(player)
 );
 
-wire [63:0]grid_active;
-wire [0:63]grid_is_wall;
+wire [63:0]is_in_grid;
+wire [63:0]is_in_gridlines;
+wire [0:127]grid_color;
 grid main_grid(
 	.x_pixel(x_pixel),
 	.y_pixel(y_pixel),
-	.grid_active(grid_active),
-	.grid_is_wall(grid_is_wall)
+	.is_in_grid(is_in_grid),
+	.grid_color(grid_color),
+	.is_in_gridlines(is_in_gridlines)
 );
 
 // RGB logic to draw the screen and notes.
@@ -243,8 +252,8 @@ begin
 			// DRAWN OBJECTS MUST BE IN ORDER OF WHEN THEY SHOULD BE DRAWN
 			// i.e. colors assigned last will be drawn to the screen on the top
 			
-			// white background
-			rgb <= 24'hFFFFFF;
+			// black background
+			rgb <= 24'h000000;
 		
 			if (view_selector == THREE_DIM || view_selector == BOTH_DIM)
 			begin
@@ -258,14 +267,27 @@ begin
                 integer i;
                 for (i = 0; i < 64; i = i + 1) 
                 begin
-                    if (grid_active[i] && grid_is_wall[i])
-                        rgb <= 24'h000000;  // Set color to black for walls
+						if (is_in_grid[i]) begin
+					 		case(grid_color[(i * 4'd2) + 1 -: 2])
+					 			0: rgb <= 24'h000000;  // Set color to black for walls
+					 			1: rgb <= 24'hFF0000;
+					 			2: rgb <= 24'h00FF00;
+					 			3: rgb <= 24'h0000FF;
+					 			default: rgb <= 24'd717171;  // Default case to handle unexpected values
+					 		endcase
+						end
+                end
+					 
+                for (i = 0; i < 14; i = i + 1) 
+                begin
+						if (is_in_gridlines[i])
+							rgb <= 24'hA0A0A0;  // Set color to black for walls
                 end
             end
 		
 			// player square
 			if (player)
-				rgb <= 24'hFF0000;
+				rgb <= 24'hFFFFFF;
 			
 			// ***** END ACTIVE DRAW SPACCE *****
       end
