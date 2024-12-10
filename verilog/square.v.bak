@@ -1,9 +1,0 @@
-module square(
-	input wire x_pos,
-	input wire y_pos,
-	input wire width,
-	input wire height,
-	output wire is_in_square
-);
-
-endmodule
