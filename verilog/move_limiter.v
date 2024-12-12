@@ -24,7 +24,7 @@ parameter START = 2'd0,
 			CHECK = 2'd2,
 			DONE = 2'd3;
 
-reg [63:0]is_in_grid;
+wire [63:0]is_in_grid;
 reg [9:0]moved_x;
 reg [9:0]moved_y;
 
@@ -112,11 +112,12 @@ begin
 			end
 			CHECK:
 			begin
-				integer i;
-            for (i = 0; i < 64; i = i + 1) 
-            begin
-					move_is_valid <= move_is_valid && !(is_in_grid[i] && (grid_color[(i * 4'd2) + 1 -: 2] != 2'd0));
-            end
+				//integer i;
+            //for (i = 0; i < 64; i = i + 1) 
+            //begin
+					//move_is_valid <= move_is_valid && !(is_in_grid[i] && (grid_color[(i * 4'd2) + 1 -: 2] != 2'd0));
+            //end
+				move_is_valid <= !(is_in_grid[0]); //&& (grid_color[(i * 4'd2) + 1 -: 2] != 2'd0))
 			end
 			DONE: done <= 1;
 		endcase
