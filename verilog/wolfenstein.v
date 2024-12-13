@@ -96,9 +96,7 @@ wire clk;
 assign clk = CLOCK_50;
 
 wire rst;
-assign rst = KEY[3];
-
-wire flip_vert = SW[9];
+assign rst = SW[0];
 
 assign LEDR[9:1] = S;
 assign LEDR[0] = limiter_rst;
@@ -107,9 +105,10 @@ assign LEDR[0] = limiter_rst;
 wire left;
 wire right;
 wire up;
-assign left = ~KEY[2];
-assign right = ~KEY[0];
+assign left = ~KEY[3];
+assign right = ~KEY[2];
 assign up = ~KEY[1];
+assign down = ~KEY[0];
 
 wire [1:0]view_selector;
 assign view_selector = SW[8:7];
@@ -151,21 +150,18 @@ move_limiter limiter(
 	.move_is_valid(move_is_valid)
 );
 
-// pixel color
-reg [23:0] rgb;
-assign {VGA_R, VGA_G, VGA_B} = rgb;
+reg [9:0]x;
+reg [9:0]y;
 
-// Instantiate the VGA driver
-vga_driver vga_inst (
-    .clk(clk),
-    .rst(rst),
-	 .vga_clk(VGA_CLK),
-	 .hsync(VGA_HS),
-	 .vsync(VGA_VS),
-	 .xPixel(x_pixel),
-	 .yPixel(y_pixel),
-	 .VGA_BLANK_N(VGA_BLANK_N),
-	 .VGA_SYNC_N(VGA_SYNC_N)
+wire player;
+square player_square(
+	.x_pos(x),
+	.y_pos(y),
+	.width(10'd20),
+	.height(10'd20),
+	.x_pixel(x_pixel),
+	.y_pixel(y_pixel),
+	.is_in_square(player)
 );
 
 reg [7:0]S;
@@ -224,25 +220,25 @@ begin
 	begin
 		// reset
 		x <= 10'd310;
-		y <= 10'd230;
+		y <= 10'd220;
 		counter <= 0;
 		move_limiter_start <= 1'b0;
 		move_limiter_rst <= 1'b1;
-		l_r <= 2'd0;
-		u_d <= 2'd0;
+		l_r <= MOVE_NONE;
+		u_d <= MOVE_NONE;
 	end
 	else
 	begin
 		case(S)
 			START:
 			begin
-				x <= 10'd360;
-				y <= 10'd230;
+				x <= 10'd310;
+				y <= 10'd200;
 				counter <= 0;
 				move_limiter_start <= 1'b0;
 				move_limiter_rst <= 1'b1;
-				l_r <= 2'd0;
-				u_d <= 2'd0;
+				l_r <= MOVE_NONE;
+				u_d <= MOVE_NONE;
 			end
 			READ_INPUT:
 			begin
@@ -253,9 +249,9 @@ begin
 				else 
 					l_r <= MOVE_NONE;
 					
-				if (up && flip_vert)
+				if (up && !down)
 					u_d <= MOVE_UP;
-				else if (up && !flip_vert)
+				else if (down && !up)
 					u_d <= MOVE_DOWN;
 				else 
 					u_d <= MOVE_NONE;
@@ -279,37 +275,24 @@ begin
 					else if (u_d == MOVE_DOWN)
 						y <= y + 10'd1;
 				end
-				move_limiter_rst <= 1'b0;
+				
 			end
 			WAIT_UPDATE:
 			begin	
 				counter <= counter + 1;
+				move_limiter_rst <= 1'b0;
 			end
 			RESET:
 			begin
 				counter <= 0;
 				move_limiter_start <= 1'b0;
 				move_limiter_rst <= 1'b1;
-				l_r <= 2'd0;
-				u_d <= 2'd0;
+				l_r <= MOVE_NONE;
+				u_d <= MOVE_NONE;
 			end
 		endcase
 	end
 end
-
-reg [9:0]x;
-reg [9:0]y;
-
-wire player;
-square player_square(
-	.x_pos(x),
-	.y_pos(y),
-	.width(10'd20),
-	.height(10'd20),
-	.x_pixel(x_pixel),
-	.y_pixel(y_pixel),
-	.is_in_square(player)
-);
 
 wire [63:0]is_in_grid;
 wire [63:0]is_in_gridlines;
@@ -320,6 +303,61 @@ grid main_grid(
 	.is_in_grid(is_in_grid),
 	.grid_color(grid_color),
 	.is_in_gridlines(is_in_gridlines)
+);
+
+// Does not work :(
+wire are_intersecting;
+wire [9:0]intersect_x;
+wire [9:0]intersect_y;
+line_intersection test_inters(
+	.x1(200),
+	.y1(0),
+	.x2(200),
+	.y2(480),
+	.x3(80),
+	.y3(120),
+	.x4(559),
+	.y4(120),
+	.are_intersecting(are_intersecting),
+	.intersect_x(intersect_x),
+	.intersect_y(intersect_y)
+);
+
+wire [639:0]is_in_rays;
+wire [1279:0]ray_colors;
+raycast three_dim_view(
+	.x_pixel(x_pixel), 	// currently drawn pixel x
+	.y_pixel(y_pixel), 	// currently drawn pixel y
+	.is_in_rays(is_in_rays),
+	.ray_colors(ray_colors)
+);
+
+wire marker;
+square marker_square(
+	.x_pos(435),
+	.y_pos(205),
+	.width(5),
+	.height(5),
+	.x_pixel(x_pixel),
+	.y_pixel(y_pixel),
+	.is_in_square(marker)
+);
+
+// pixel color
+reg [23:0] rgb;
+assign {VGA_R, VGA_G, VGA_B} = rgb;
+
+// Instantiate the VGA driver
+vga_driver vga_inst (
+    .clk(clk),
+    .rst(rst),
+	 .vga_clk(VGA_CLK),
+	 .hsync(VGA_HS),
+	 .vsync(VGA_VS),
+	 .xPixel(x_pixel),
+	 .yPixel(y_pixel),
+	 .VGA_BLANK_N(VGA_BLANK_N),
+	 .VGA_SYNC_N(VGA_SYNC_N)
 );
 
 // RGB logic to draw the screen and notes.
@@ -344,6 +382,19 @@ begin
 			if (view_selector == THREE_DIM || view_selector == BOTH_DIM)
 			begin
 				// draw 3d view
+				integer j;
+            for (j = 0; j < 640; j = j + 1) 
+            begin
+					if (is_in_rays[j]) begin
+						case(ray_colors[(j * 4'd2) +: 2])
+							0: rgb <= 24'h000000;  // Set color to black for walls
+							1: rgb <= 24'hFF0000;
+							2: rgb <= 24'h00FF00;
+							3: rgb <= 24'h0000FF;
+							default: rgb <= 24'd717171;  // Default case to handle unexpected values
+						endcase
+					end
+            end
 			end
 			
 			if (view_selector == TWO_DIM || view_selector == BOTH_DIM)
@@ -369,11 +420,23 @@ begin
 						if (is_in_gridlines[i])
 							rgb <= 24'hA0A0A0;  // Set color to black for walls
                 end
+					 
+					if (marker)
+						rgb <= 24'hFFFF00;
+					 
+					// player square
+					if (player)
+						rgb <= 24'hFFFFFF;
+						
+					// Not working
+					if (are_intersecting)
+					begin
+						if (x_pixel == intersect_x && y_pixel == intersect_y)
+						begin
+							rgb <= 24'hFFFFFF;
+						end
+					end
             end
-		
-			// player square
-			if (player)
-				rgb <= 24'hFFFFFF;
 			
 			// ***** END ACTIVE DRAW SPACCE *****
       end
