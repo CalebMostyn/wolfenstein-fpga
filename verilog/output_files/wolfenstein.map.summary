@@ -1,11 +1,11 @@
-Analysis & Synthesis Status : Successful - Fri Dec 13 03:24:22 2024
+Analysis & Synthesis Status : Successful - Fri Dec 13 04:03:55 2024
 Quartus Prime Version : 23.1std.0 Build 991 11/28/2023 SC Lite Edition
 Revision Name : wolfenstein
 Top-level Entity Name : wolfenstein
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
 Total registers : 143
-Total pins : 82
+Total pins : 54
 Total virtual pins : 0
 Total block memory bits : 0
 Total DSP Blocks : 28

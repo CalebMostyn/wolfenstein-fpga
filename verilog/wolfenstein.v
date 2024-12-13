@@ -1,77 +1,8 @@
 module wolfenstein(
-
-	//////////// ADC //////////
-	//output		          		ADC_CONVST,
-	//output		          		ADC_DIN,
-	//input 		          		ADC_DOUT,
-	//output		          		ADC_SCLK,
-
-	//////////// Audio //////////
-	//input 		          		AUD_ADCDAT,
-	//inout 		          		AUD_ADCLRCK,
-	//inout 		          		AUD_BCLK,
-	//output		          		AUD_DACDAT,
-	//inout 		          		AUD_DACLRCK,
-	//output		          		AUD_XCK,
-
-	//////////// CLOCK //////////
-	//input 		          		CLOCK2_50,
-	//input 		          		CLOCK3_50,
-	//input 		          		CLOCK4_50,
 	input 		          		CLOCK_50,
-
-	//////////// SDRAM //////////
-	//output		    [12:0]		DRAM_ADDR,
-	//output		     [1:0]		DRAM_BA,
-	//output		          		DRAM_CAS_N,
-	//output		          		DRAM_CKE,
-	//output		          		DRAM_CLK,
-	//output		          		DRAM_CS_N,
-	//inout 		    [15:0]		DRAM_DQ,
-	//output		          		DRAM_LDQM,
-	//output		          		DRAM_RAS_N,
-	//output		          		DRAM_UDQM,
-	//output		          		DRAM_WE_N,
-
-	//////////// I2C for Audio and Video-In //////////
-	//output		          		FPGA_I2C_SCLK,
-	//inout 		          		FPGA_I2C_SDAT,
-
-	//////////// SEG7 //////////
-	output		     [6:0]		HEX0,
-	output		     [6:0]		HEX1,
-	output		     [6:0]		HEX2,
-	output		     [6:0]		HEX3,
-	//output		     [6:0]		HEX4,
-	//output		     [6:0]		HEX5,
-
-	//////////// IR //////////
-	//input 		          		IRDA_RXD,
-	//output		          		IRDA_TXD,
-
-	//////////// KEY //////////
 	input 		     [3:0]		KEY,
-
-	//////////// LED //////////
 	output		     [9:0]		LEDR,
-
-	//////////// PS2 //////////
-	//inout 		          		PS2_CLK,
-	//inout 		          		PS2_CLK2,
-	//inout 		          		PS2_DAT,
-	//inout 		          		PS2_DAT2,
-
-	//////////// SW //////////
 	input 		     [9:0]		SW,
-
-	//////////// Video-In //////////
-	//input 		          		TD_CLK27,
-	//input 		     [7:0]		TD_DATA,
-	//input 		          		TD_HS,
-	//output		          		TD_RESET_N,
-	//input 		          		TD_VS,
-
-	//////////// VGA //////////
 	output		          		VGA_BLANK_N,
 	output		     [7:0]		VGA_B,
 	output		          		VGA_CLK,
@@ -80,12 +11,6 @@ module wolfenstein(
 	output		     [7:0]		VGA_R,
 	output		          		VGA_SYNC_N,
 	output		          		VGA_VS
-
-	//////////// GPIO_0, GPIO_0 connect to GPIO Default //////////
-	//inout 		    [35:0]		GPIO_0,
-
-	//////////// GPIO_1, GPIO_1 connect to GPIO Default //////////
-	//inout 		    [35:0]		GPIO_1
 );
 
 wire [9:0] x_pixel;
@@ -111,7 +36,7 @@ assign up = ~KEY[1];
 assign down = ~KEY[0];
 
 wire [1:0]view_selector;
-assign view_selector = SW[8:7];
+assign view_selector = SW[9:8];
 
 parameter TWO_DIM = 2'd0,
 			THREE_DIM = 2'd1,
@@ -162,6 +87,17 @@ square player_square(
 	.x_pixel(x_pixel),
 	.y_pixel(y_pixel),
 	.is_in_square(player)
+);
+
+wire dir_marker;
+square dir_square(
+	.x_pos(x - 5),
+	.y_pos(y + 7),
+	.width(10),
+	.height(5),
+	.x_pixel(x_pixel),
+	.y_pixel(y_pixel),
+	.is_in_square(dir_marker)
 );
 
 reg [7:0]S;
@@ -336,8 +272,8 @@ wire marker;
 square marker_square(
 	.x_pos(435),
 	.y_pos(205),
-	.width(5),
-	.height(5),
+	.width(10),
+	.height(10),
 	.x_pixel(x_pixel),
 	.y_pixel(y_pixel),
 	.is_in_square(marker)
@@ -420,12 +356,13 @@ begin
 						if (is_in_gridlines[i])
 							rgb <= 24'hA0A0A0;  // Set color to black for walls
                 end
-					 
+					
+					// raycast marker
 					if (marker)
 						rgb <= 24'hFFFF00;
 					 
 					// player square
-					if (player)
+					if (player || dir_marker)
 						rgb <= 24'hFFFFFF;
 						
 					// Not working
