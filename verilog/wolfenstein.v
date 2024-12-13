@@ -98,10 +98,11 @@ assign clk = CLOCK_50;
 wire rst;
 assign rst = KEY[3];
 
-wire start;
-assign start = SW[0];
-
 wire flip_vert = SW[9];
+
+assign LEDR[9:1] = S;
+assign LEDR[0] = limiter_rst;
+
 
 wire left;
 wire right;
@@ -126,6 +127,29 @@ parameter MAP_COLORS = {24'h000000,
 			
 
 reg [30:0]counter;
+reg move_limiter_start;
+wire move_limiter_done;
+reg move_limiter_rst;
+wire limiter_rst;
+assign limiter_rst = (move_limiter_rst && rst);
+wire move_is_valid;
+reg [1:0]l_r;
+reg [1:0]u_d;
+
+move_limiter limiter(
+	.clk(clk),
+	.rst(limiter_rst),
+	.start(move_limiter_start),
+	.done(move_limiter_done),
+	.grid_color(grid_color),
+	.x_pos(x),
+	.y_pos(y),
+	.width(10'd20),
+	.height(10'd20),
+	.l_r(l_r),
+	.u_d(u_d),
+	.move_is_valid(move_is_valid)
+);
 
 // pixel color
 reg [23:0] rgb;
@@ -148,10 +172,20 @@ reg [7:0]S;
 reg [7:0]NS;
 
 parameter START = 8'd0,
-			UPDATE = 8'd1,
-			WAIT = 8'd2,
-			DONE = 8'd3,
+			READ_INPUT = 8'd1,
+			START_LIMITER = 8'd2,
+			WAIT_LIMITER = 8'd3,
+			LIMITER_DONE = 8'd4,
+			UPDATE = 8'd5,
+			WAIT_UPDATE = 8'd6,
+			RESET = 8'd7,
 			ERROR = 8'hFF;
+			
+parameter MOVE_RIGHT = 2'd1,
+			MOVE_LEFT = 2'd2,
+			MOVE_DOWN = 2'd1,
+			MOVE_UP = 2'd2,
+			MOVE_NONE = 2'd0;
 			
 always@(posedge clk or negedge rst)
 begin
@@ -164,17 +198,22 @@ end
 always@(*)
 begin
 	case(S)
-		START:
-			if (start == 1'b1)
-				NS = UPDATE;
+		START: NS = READ_INPUT;
+		READ_INPUT: NS = START_LIMITER;
+		START_LIMITER: NS = WAIT_LIMITER;
+		WAIT_LIMITER:
+			if (move_limiter_done)
+				NS = LIMITER_DONE;
 			else
-				NS = UPDATE;
-		UPDATE: NS = WAIT;
-		WAIT:
+				NS = WAIT_LIMITER;
+		LIMITER_DONE: NS = UPDATE;
+		UPDATE: NS = WAIT_UPDATE;
+		WAIT_UPDATE:
 			if (counter < 30'd50_000_000 / UPDATE_SPEED)
-				NS = WAIT;
+				NS = WAIT_UPDATE;
 			else
-				NS = UPDATE;
+				NS = RESET;
+		RESET: NS = READ_INPUT;
 		default: NS = ERROR;
 	endcase
 end
@@ -187,26 +226,73 @@ begin
 		x <= 10'd310;
 		y <= 10'd230;
 		counter <= 0;
+		move_limiter_start <= 1'b0;
+		move_limiter_rst <= 1'b1;
+		l_r <= 2'd0;
+		u_d <= 2'd0;
 	end
 	else
 	begin
 		case(S)
+			START:
+			begin
+				x <= 10'd360;
+				y <= 10'd230;
+				counter <= 0;
+				move_limiter_start <= 1'b0;
+				move_limiter_rst <= 1'b1;
+				l_r <= 2'd0;
+				u_d <= 2'd0;
+			end
+			READ_INPUT:
+			begin
+				if (left && !right)
+					l_r <= MOVE_LEFT;
+				else if (right && !left)
+					l_r <= MOVE_RIGHT;
+				else 
+					l_r <= MOVE_NONE;
+					
+				if (up && flip_vert)
+					u_d <= MOVE_UP;
+				else if (up && !flip_vert)
+					u_d <= MOVE_DOWN;
+				else 
+					u_d <= MOVE_NONE;
+			end
+			START_LIMITER: move_limiter_start <= 1'b1;
+			LIMITER_DONE:
+			begin 
+				move_limiter_start <= 1'b0;
+			end
 			UPDATE:
 			begin
-				counter <= 0;
-				if (left)
-					x <= x - 1;
-				
-				if (right)
-					x <= x + 1;
-					
-				if (up)
-					if (flip_vert)
-						y <= y + 1;
-					else
-						y <= y - 1;
+				if (move_is_valid)
+				begin
+					if (l_r == MOVE_LEFT)
+						x <= x - 10'd1;
+					else if (l_r == MOVE_RIGHT)
+						x <= x + 10'd1;
+						
+					if (u_d == MOVE_UP)
+						y <= y - 10'd1;
+					else if (u_d == MOVE_DOWN)
+						y <= y + 10'd1;
+				end
+				move_limiter_rst <= 1'b0;
 			end
-			WAIT: counter <= counter + 1;
+			WAIT_UPDATE:
+			begin	
+				counter <= counter + 1;
+			end
+			RESET:
+			begin
+				counter <= 0;
+				move_limiter_start <= 1'b0;
+				move_limiter_rst <= 1'b1;
+				l_r <= 2'd0;
+				u_d <= 2'd0;
+			end
 		endcase
 	end
 end
