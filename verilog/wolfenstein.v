@@ -137,7 +137,7 @@ reg [1:0]l_r;
 reg [1:0]u_d;
 
 move_limiter limiter(
-	.clk(fake_clk),
+	.clk(clk),
 	.rst(limiter_rst),
 	.start(move_limiter_start),
 	.done(move_limiter_done),
@@ -178,6 +178,7 @@ parameter START = 8'd0,
 			LIMITER_DONE = 8'd4,
 			UPDATE = 8'd5,
 			WAIT_UPDATE = 8'd6,
+			RESET = 8'd7,
 			ERROR = 8'hFF;
 			
 parameter MOVE_RIGHT = 2'd1,
@@ -211,7 +212,8 @@ begin
 			if (counter < 30'd50_000_000 / UPDATE_SPEED)
 				NS = WAIT_UPDATE;
 			else
-				NS = READ_INPUT;
+				NS = RESET;
+		RESET: NS = READ_INPUT;
 		default: NS = ERROR;
 	endcase
 end
@@ -234,7 +236,7 @@ begin
 		case(S)
 			START:
 			begin
-				x <= 10'd310;
+				x <= 10'd360;
 				y <= 10'd230;
 				counter <= 0;
 				move_limiter_start <= 1'b0;
@@ -262,14 +264,11 @@ begin
 			LIMITER_DONE:
 			begin 
 				move_limiter_start <= 1'b0;
-				move_limiter_rst <= 1'b0;
 			end
 			UPDATE:
 			begin
-				counter <= 0;
-				move_limiter_rst <= 1'b1;
-				//if (move_is_valid)
-				//begin
+				if (move_is_valid)
+				begin
 					if (l_r == MOVE_LEFT)
 						x <= x - 10'd1;
 					else if (l_r == MOVE_RIGHT)
@@ -279,11 +278,21 @@ begin
 						y <= y - 10'd1;
 					else if (u_d == MOVE_DOWN)
 						y <= y + 10'd1;
-				//end
+				end
+				move_limiter_rst <= 1'b0;
+			end
+			WAIT_UPDATE:
+			begin	
+				counter <= counter + 1;
+			end
+			RESET:
+			begin
+				counter <= 0;
+				move_limiter_start <= 1'b0;
+				move_limiter_rst <= 1'b1;
 				l_r <= 2'd0;
 				u_d <= 2'd0;
 			end
-			WAIT_UPDATE: counter <= counter + 1;
 		endcase
 	end
 end
