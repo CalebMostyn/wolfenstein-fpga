@@ -21,7 +21,7 @@ wire clk;
 assign clk = CLOCK_50;
 
 wire rst;
-assign rst = SW[0];
+assign rst = KEY[3];
 
 assign LEDR[9:1] = S;
 assign LEDR[0] = limiter_rst;
@@ -30,10 +30,10 @@ assign LEDR[0] = limiter_rst;
 wire left;
 wire right;
 wire up;
-assign left = ~KEY[3];
-assign right = ~KEY[2];
+assign left = ~KEY[2];
+assign right = ~KEY[0];
 assign up = ~KEY[1];
-assign down = ~KEY[0];
+assign down = SW[0];
 
 wire [1:0]view_selector;
 assign view_selector = SW[9:8];
@@ -187,7 +187,7 @@ begin
 					
 				if (up && !down)
 					u_d <= MOVE_UP;
-				else if (down && !up)
+				else if (up && down)
 					u_d <= MOVE_DOWN;
 				else 
 					u_d <= MOVE_NONE;
