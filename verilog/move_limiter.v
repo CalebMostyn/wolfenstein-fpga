@@ -55,7 +55,8 @@ parameter START = 8'd0,
 			CHECK_BOT_LEFT = 8'd6,
 			SET_BOT_RIGHT = 8'd7,
 			CHECK_BOT_RIGHT = 8'd8,
-			DONE = 8'd9;
+			AGGREGATE = 8'd9,
+			DONE = 8'd10;
 
 wire [63:0]is_in_grid;
 reg [9:0]moved_x;
@@ -102,7 +103,8 @@ begin
 		SET_BOT_LEFT: NS = CHECK_BOT_LEFT;
 		CHECK_BOT_LEFT: NS = SET_BOT_RIGHT;
 		SET_BOT_RIGHT: NS = CHECK_BOT_RIGHT;
-		CHECK_BOT_RIGHT: NS = DONE;
+		CHECK_BOT_RIGHT: NS = AGGREGATE;
+		AGGREGATE: NS = DONE;
 		DONE: NS = DONE;
 	endcase
 end
@@ -156,11 +158,11 @@ begin
 			begin
 				if (l_r == LEFT)
 				begin
-					moved_x <= x_pos + width - PIXEL_BUFFER - 1;
+					moved_x <= x_pos + (width - 10'd1) - PIXEL_BUFFER;
 				end
 				else if (l_r == RIGHT)
 				begin
-					moved_x <= x_pos + width + PIXEL_BUFFER - 1;
+					moved_x <= x_pos + (width - 10'd1) + PIXEL_BUFFER;
 				end
 				
 				if (u_d == UP)
@@ -189,11 +191,11 @@ begin
 				
 				if (u_d == UP)
 				begin
-					moved_y <= y_pos + height - PIXEL_BUFFER - 1;
+					moved_y <= y_pos + (height - 10'd1) - PIXEL_BUFFER;
 				end
 				else if (u_d == DOWN)
 				begin
-					moved_y <= y_pos + height + PIXEL_BUFFER - 1;
+					moved_y <= y_pos + (height - 10'd1) + PIXEL_BUFFER;
 				end
 			end
 			CHECK_BOT_LEFT:
@@ -204,29 +206,29 @@ begin
 			begin
 				if (l_r == LEFT)
 				begin
-					moved_x <= x_pos + width - PIXEL_BUFFER - 1;
+					moved_x <= x_pos + (width - 10'd1) - PIXEL_BUFFER;
 				end
 				else if (l_r == RIGHT)
 				begin
-					moved_x <= x_pos + width + PIXEL_BUFFER - 1;
+					moved_x <= x_pos + (width - 10'd1) + PIXEL_BUFFER;
 				end
 				
 				if (u_d == UP)
 				begin
-					moved_y <= y_pos + height - PIXEL_BUFFER - 1;
+					moved_y <= y_pos + (height - 10'd1) - PIXEL_BUFFER;
 				end
 				else if (u_d == DOWN)
 				begin
-					moved_y <= y_pos + height + PIXEL_BUFFER - 1;
+					moved_y <= y_pos + (height - 10'd1) + PIXEL_BUFFER;
 				end
 			end
 			CHECK_BOT_RIGHT:
 			begin
 				corners_valid[3] <= &individual_valid;
 			end
+			AGGREGATE: move_is_valid <= &corners_valid;
 			DONE:
 			begin
-				move_is_valid <= &corners_valid;
 				done <= 1'b1;
 			end
 		endcase
